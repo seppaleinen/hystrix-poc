@@ -19,8 +19,8 @@ class ServiceTwoController {
     static final String METHOD_ONE_URL = "/method-one";
 
     @RequestMapping(value = METHOD_ONE_URL, method = RequestMethod.GET)
-    ResponseEntity methodOne(@RequestParam String param) {
+    ResponseEntity<String> methodOne(@RequestParam String param) {
         log.log(Level.INFO, "Accepting parameter: " + param);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<String>(param + "!", HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package se.david.service2.controller;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import se.david.service2.ServiceTwoApplication;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -43,7 +46,12 @@ public class ServiceTwoControllerTest {
 
     @Test
     public void canAccess() {
-        given().param("param", "hej").when().get(ROOT_URL + ServiceTwoController.METHOD_ONE_URL).
-                then().statusCode(HttpStatus.OK.value());
+        Response response = given().param("param", "hej").
+                when().get("/service-two" + ServiceTwoController.METHOD_ONE_URL).
+                thenReturn();
+
+        assertNotNull(response);
+        assertEquals("ERROR: " + response.prettyPrint(), HttpStatus.OK.value(), response.statusCode());
+        assertEquals("hej!", response.print());
     }
 }

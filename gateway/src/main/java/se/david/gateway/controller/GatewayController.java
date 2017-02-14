@@ -29,7 +29,7 @@ class GatewayController {
     @RequestMapping(value = SERVICE_ONE_METHOD_ONE, method = RequestMethod.GET)
     ResponseEntity<String> serviceOneMethodOne(@RequestParam String param) throws ExecutionException, InterruptedException {
         log.log(Level.INFO, "Accepting parameter: " + param);
-        String result = new StringHystrixCommand(
+        String result = new GenericObservableCommand(
                 "SERVICE_ONE_METHOD_ONE",
                 restTemplateBuilder.build(),
                 "http://localhost:10081" + SERVICE_ONE_METHOD_ONE + "?param={param}",
@@ -40,7 +40,7 @@ class GatewayController {
     @RequestMapping(value = SERVICE_TWO_METHOD_ONE, method = RequestMethod.GET)
     ResponseEntity<String> serviceTwoMethodOne(@RequestParam String param) throws ExecutionException, InterruptedException {
         log.log(Level.INFO, "Accepting parameter: " + param);
-        String result = new StringHystrixCommand(
+        String result = new GenericObservableCommand(
                 "SERVICE_TWO_METHOD_ONE",
                 restTemplateBuilder.build(),
                 "http://localhost:10082" + SERVICE_TWO_METHOD_ONE + "?param={param}",

@@ -12,7 +12,7 @@ import rx.Subscriber;
 
 import java.util.concurrent.ExecutionException;
 
-public class GenericObservableCommand extends HystrixObservableCommand<String> {
+public class GenericObservableCommand extends HystrixObservableCommand<String> implements CommandInterface {
     private final String url;
     private final RestTemplate restTemplate;
     private final String content;
@@ -29,12 +29,10 @@ public class GenericObservableCommand extends HystrixObservableCommand<String> {
             public void call(Subscriber<? super String> observer) {
                 try {
                     if (!observer.isUnsubscribed()) {
-                        // a real example would do work like a network call here
-
                         HttpHeaders headers = new HttpHeaders();
                         HttpEntity entity = new HttpEntity(headers);
 
-                        ResponseEntity<String> response = restTemplate.exchange("url",
+                        ResponseEntity<String> response = restTemplate.exchange(url,
                                 HttpMethod.GET,
                                 entity,
                                 String.class,

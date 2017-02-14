@@ -8,7 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class StringHystrixCommand extends HystrixCommand<String> {
+public class StringHystrixCommand extends HystrixCommand<String> implements CommandInterface {
     private final String url;
     private final RestTemplate restTemplate;
     private final String content;

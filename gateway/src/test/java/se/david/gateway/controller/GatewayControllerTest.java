@@ -6,7 +6,6 @@ import com.jayway.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -24,13 +23,13 @@ import org.springframework.web.client.RestTemplate;
 import se.david.gateway.GatewayApplication;
 
 import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.when;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -74,6 +73,8 @@ public class GatewayControllerTest {
                 then().statusCode(HttpStatus.METHOD_NOT_ALLOWED.value());
         given().contentType(ContentType.JSON).param("hej").when().delete(GatewayController.SERVICE_ONE_METHOD_ONE).
                 then().statusCode(HttpStatus.METHOD_NOT_ALLOWED.value());
+
+        verify(restTemplateBuilder, never()).build();
     }
 
     @Test
@@ -99,6 +100,8 @@ public class GatewayControllerTest {
                 then().statusCode(HttpStatus.METHOD_NOT_ALLOWED.value());
         given().contentType(ContentType.JSON).param("hej").when().delete(GatewayController.SERVICE_TWO_METHOD_ONE).
                 then().statusCode(HttpStatus.METHOD_NOT_ALLOWED.value());
+
+        verify(restTemplateBuilder, never()).build();
     }
 
     @Test
